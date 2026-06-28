@@ -766,7 +766,7 @@ btnEnvelopeNext.addEventListener("click", () => {
 
 // --- 11. Cute Memories Gallery ---
 const galleryPhotos = [
-    { src: "images/3 (1).jpg", caption: "Your silly smile that melts my heart... MD ❤️" },
+    { src: "images/3 (1).jpg", caption: "Your silly smile that melts my heart❤️" },
     { src: "images/3 (2).jpg", caption: "Every moment with you is a treasure... 💖" },
     { src: "images/3 (3).jpg", caption: "The way you look at me... pure magic ✨" },
     { src: "images/3 (4).jpg", caption: "My favorite view in the whole world 🌍" },
@@ -775,6 +775,12 @@ const galleryPhotos = [
     { src: "images/3 (7).jpg", caption: "Here's to making infinite more memories! 🥂" }
 ];
 let currentGalleryIndex = 0;
+
+// Preload gallery images to prevent lag
+galleryPhotos.forEach(photo => {
+    const img = new Image();
+    img.src = photo.src;
+});
 
 const galleryPhotoEl = document.getElementById("gallery-photo");
 const galleryCaptionEl = document.getElementById("gallery-caption");
@@ -786,7 +792,7 @@ function updateGallery() {
     if (!galleryPhotoEl || !galleryCaptionEl || !galleryProgressEl) return;
     
     // Add brief fade-out before changing src for smooth transition
-    galleryPhotoEl.style.opacity = 0;
+    galleryPhotoEl.style.opacity = 0.2;
     
     setTimeout(() => {
         galleryPhotoEl.src = galleryPhotos[currentGalleryIndex].src;
@@ -809,7 +815,7 @@ function updateGallery() {
         } else {
             btnGalleryNext.textContent = "Next →";
         }
-    }, 200);
+    }, 80); // Quicker transition to make it feel responsive and snappy
 }
 
 // Initialize gallery state
@@ -830,6 +836,20 @@ btnGalleryNext.addEventListener("click", () => {
         resetSurprise();
     }
 });
+
+// Allow clicking on the Polaroid frame itself to advance to the next memory
+const polaroidFrame = document.querySelector(".polaroid-frame");
+if (polaroidFrame) {
+    polaroidFrame.style.cursor = "pointer";
+    polaroidFrame.addEventListener("click", () => {
+        if (currentGalleryIndex < galleryPhotos.length - 1) {
+            currentGalleryIndex++;
+            updateGallery();
+        } else {
+            resetSurprise();
+        }
+    });
+}
 
 // --- 12. Reset Surprise Function ---
 function resetSurprise() {
