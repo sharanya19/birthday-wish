@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love ❤️</title>
+    <!-- Google Fonts for gorgeous typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+
+<body>
+    <!-- Background Canvas for animations (confetti, fireworks, hearts) -->
+    <canvas id="animation-canvas"></canvas>
+
+    <!-- Persistent Room Decorations (appears after decorating phase) -->
+    <div id="room-decorations-bg" style="display: none;">
+        <!-- Fairy Lights String at top -->
+        <div class="fairy-lights-string">
+            <div class="bulb pink"></div>
+            <div class="bulb gold"></div>
+            <div class="bulb teal"></div>
+            <div class="bulb pink"></div>
+            <div class="bulb gold"></div>
+            <div class="bulb teal"></div>
+            <div class="bulb pink"></div>
+            <div class="bulb gold"></div>
+            <div class="bulb teal"></div>
+            <div class="bulb pink"></div>
+        </div>
+
+        <!-- Hanging Happy Birthday Banner Bunting -->
+        <div class="bunting-banner" id="room-bunting">
+            <div class="flag">H</div>
+            <div class="flag">A</div>
+            <div class="flag">P</div>
+            <div class="flag">P</div>
+            <div class="flag">Y</div>
+            <div class="flagspacer"></div>
+            <div class="flag">B</div>
+            <div class="flag">D</div>
+            <div class="flag">A</div>
+            <div class="flag">Y</div>
+        </div>
+
+        <!-- Balloon Bunch (Group of colorful blue/teal balloons rising from bottom left) -->
+        <div class="balloon-bunch" id="balloon-bunch">
+            <div class="bunch-balloon balloon-blue-1"></div>
+            <div class="bunch-balloon balloon-blue-2"></div>
+            <div class="bunch-balloon balloon-teal"></div>
+            <div class="bunch-balloon balloon-pink"></div>
+            <div class="bunch-string"></div>
+        </div>
+
+    </div>
+
+    <!-- Music Control (Soft Ambient Music Synthesizer / Audio player) -->
+    <div id="music-control" class="hidden">
+        <button id="music-toggle" aria-label="Toggle Music">
+            <span class="music-icon active-playing">🎵</span>
+        </button>
+    </div>
+
+    <!-- Main Container -->
+    <main id="app-container">
+
+        <!-- 1. LOADING SCREEN -->
+        <section id="scene-loading" class="scene active">
+            <div class="card glassmorphism">
+                <div class="heart-pulse">❤️</div>
+                <h1 class="fade-in-text">Hey love ❤️, today isn't just another day...</h1>
+                <p class="fade-in-text delay-1">It's your special day.</p>
+                <button id="btn-start" class="btn btn-primary pulse-btn">Begin the Surprise ✨</button>
+            </div>
+        </section>
+
+        <!-- 2. PERMISSION STEP -->
+        <section id="scene-permission" class="scene">
+            <div class="card glassmorphism">
+                <h2>I spent some time making something for you...</h2>
+                <p>Do you want to see it?</p>
+                <div class="btn-group">
+                    <button id="btn-yes" class="btn btn-success">Yes ❤️</button>
+                    <button id="btn-no" class="btn btn-danger">No 😏</button>
+                </div>
+                <div id="wrong-answer-msg" class="wrong-message hidden">
+                    <p class="bounce-text">Wrong answer 😂</p>
+                    <p class="small-text">Try again.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. LIGHTS OFF SCENE -->
+        <section id="scene-lights" class="scene">
+            <div class="card glassmorphism">
+                <h2>First things first...</h2>
+                <p>Turn off the lights and wear your smile.</p>
+
+                <div class="switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="lights-switch">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="switch-label">Turn Lights Off</span>
+                </div>
+
+                <button id="btn-go-decorate" class="btn btn-primary hidden">Decorate the Room 🎈</button>
+            </div>
+        </section>
+
+        <!-- 4. DECORATING THE ROOM -->
+        <section id="scene-decorating" class="scene">
+            <div class="decorating-stage text-center">
+                <div class="loader-spinner"></div>
+                <h2 id="decorating-text" class="glow-text">Decorating your special place...</h2>
+            </div>
+        </section>
+
+        <!-- 5. BIRTHDAY REVEAL -->
+        <section id="scene-reveal" class="scene">
+            <div class="reveal-content text-center">
+                <h1 class="giant-birthday-text">HAPPY BIRTHDAY<br><span class="name-highlight">NIKESH THAPA</span> ❤️
+                </h1>
+                <p class="reveal-subtext">You deserve all the happiness in the universe.</p>
+                <button id="btn-reveal-next" class="btn btn-primary margin-top-lg">Let's move forward ✨</button>
+            </div>
+        </section>
+
+        <!-- 6. MEMORY TIMELINE -->
+        <section id="scene-timeline" class="scene">
+            <div class="timeline-container">
+                <h2 class="section-title">Our Journey So Far ⭐</h2>
+
+                <div class="timeline">
+                    <!-- 2023 -->
+                    <div class="timeline-item left">
+                        <div class="timeline-icon">💑</div>
+                        <div class="timeline-content glassmorphism">
+                            <span class="timeline-date">2023 • Turned 24</span>
+                            <h3>First Birthday Together</h3>
+                            <p>When we got into the relationship! We celebrated your birthday in Bengaluru, went to
+                                Brunch place,TheoBroma and Back Street Brewery, and we were so childish back then! 🍰
+                            </p>
+                            <!-- Custom SVG Photo frame to look premium -->
+                            <div class="photo-frame">
+                                <img src="images/1.jpg" alt="Bengaluru Birthday Celebration"
+                                    onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 style=%22background:%232a1b3d;%22><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23e2b2ff%22 font-family=%22sans-serif%22 font-size=%2214%22>📷 Bengaluru/Borma Bakery (Tap to upload)</text></svg>'">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2024 -->
+                    <div class="timeline-item right">
+                        <div class="timeline-icon">🏡</div>
+                        <div class="timeline-content glassmorphism">
+                            <span class="timeline-date">2024 • Turned 25</span>
+                            <h3>Long Distance Warmth</h3>
+                            <p>I was at my home and you were with your family. Even though we were apart, our hearts
+                                were closer than ever! 💕</p>
+                            <div class="no-image-placeholder">
+                                <span>✨ Connected by hearts, blocks apart ✨</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2025 -->
+                    <div class="timeline-item left">
+                        <div class="timeline-icon">🏔️</div>
+                        <div class="timeline-content glassmorphism">
+                            <span class="timeline-date">2025 • Turned 26</span>
+                            <h3>Adventure in Manali</h3>
+                            <p>We went to Manali, did our Hampta Pass trek, and celebrated your birthday amidst the
+                                beautiful snow-capped mountains! ❄️</p>
+                            <div class="photo-frame">
+                                <img src="images/2.jpg" alt="Manali Trek Birthday"
+                                    onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22 style=%22background:%232a1b3d;%22><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23e2b2ff%22 font-family=%22sans-serif%22 font-size=%2214%22>📷 Manali Trek Celebration (Tap to upload)</text></svg>'">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2026 -->
+                    <div class="timeline-item right">
+                        <div class="timeline-icon">✈️</div>
+                        <div class="timeline-content glassmorphism">
+                            <span class="timeline-date">2026 • Turned 27</span>
+                            <h3>Happy Birthday</h3>
+                            <p>This year again we are apart, but I really wish I was with you. Let's go on a belated
+                                birthday trip in July, love! ✈️💖</p>
+                            <div class="no-image-placeholder">
+                                <span>✨ Looking forward to July! ✨</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center margin-top-lg">
+                    <button id="btn-timeline-next" class="btn btn-primary">Let's go make a Wish and Cut the cake
+                        🎂</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. VIRTUAL CAKE CUTTING -->
+        <section id="scene-cake" class="scene">
+            <div class="card glassmorphism text-center">
+                <h2>Virtual Cake Cutting 🎂</h2>
+
+                <!-- Wish Step (First) -->
+                <div id="wish-container">
+                    <h3 class="pop-text text-rainbow margin-top-md">let's go Make a wish and cut the cake ❤️</h3>
+                    <p class="small-text text-muted">Close your eyes, make a silent wish, and press the button when
+                        you're ready!</p>
+                    <button id="btn-make-wish" class="btn btn-primary pulse-btn">Let's Go Cut the Cake ✨</button>
+                </div>
+
+                <!-- Cut Step (Second, initially hidden) -->
+                <div id="cut-container" class="hidden">
+                    <p id="cake-instruction">Now, blow out the candle first! 🌬️</p>
+
+                    <div class="cake-area">
+                        <!-- Knife overlay -->
+                        <div id="cake-knife" class="knife">🔪</div>
+
+                        <!-- SVG Interactive Cake -->
+                        <svg class="cake-svg" viewBox="0 0 200 200" width="220" height="220">
+                            <!-- Cake Body -->
+                            <g id="cake-body">
+                                <!-- Left Slice half -->
+                                <path id="slice-left" d="M 30,120 L 100,135 L 100,75 L 30,60 Z" fill="#ff7597" />
+                                <!-- Right Slice half -->
+                                <path id="slice-right" d="M 100,135 L 170,120 L 170,60 L 100,75 Z" fill="#ff5e84" />
+                                <!-- Front icing -->
+                                <path d="M 30,60 Q 100,85 170,60 L 170,75 Q 100,100 30,75 Z" fill="#fff"
+                                    opacity="0.9" />
+                                <!-- Frosting drips -->
+                                <path
+                                    d="M 30,75 q 10,-2 15,-10 q 10,8 15,-3 q 15,12 25,-5 q 10,10 20,-2 q 20,8 30,-5 q 10,12 20,-2 q 10,-3 20,-8"
+                                    fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" />
+                                <!-- Cream dollops on top -->
+                                <circle cx="50" cy="62" r="6" fill="#fff" />
+                                <circle cx="80" cy="71" r="6" fill="#fff" />
+                                <circle cx="120" cy="71" r="6" fill="#fff" />
+                                <circle cx="150" cy="62" r="6" fill="#fff" />
+                                <!-- Strawberries -->
+                                <circle cx="50" cy="56" r="4" fill="#ff3b30" />
+                                <circle cx="80" cy="65" r="4" fill="#ff3b30" />
+                                <circle cx="120" cy="65" r="4" fill="#ff3b30" />
+                                <circle cx="150" cy="56" r="4" fill="#ff3b30" />
+                            </g>
+                            <!-- Candle -->
+                            <g id="cake-candle">
+                                <rect x="96" y="25" width="8" height="35" rx="2" fill="#4cd964" />
+                                <path d="M 96,25 Q 100,30 104,25 L 104,60 L 96,60 Z" fill="#2ac049" opacity="0.3" />
+                                <!-- Flame -->
+                                <path id="candle-flame" class="flame-animation"
+                                    d="M 100,5 Q 105,15 100,23 Q 95,15 100,5 Z" fill="#ff9500" />
+                            </g>
+                        </svg>
+                    </div>
+                    <button id="btn-blow-candle" class="btn btn-primary pulse-btn">Blow Out Candle 🌬️</button>
+                    <button id="btn-cut-cake" class="btn btn-primary hidden">Cut the Cake 🎂</button>
+                </div>
+
+                <!-- Cute Cartoony Video Feeding & Hugging Animation -->
+                <div id="feeding-animation-container" class="hidden">
+                    <div class="video-container"
+                        style="max-width: 320px; margin: 20px auto; border-radius: 16px; overflow: hidden; border: 4px solid white; box-shadow: var(--glass-shadow); background: #000;">
+                        <video id="feeding-video" src="images/video.mp4" width="100%" height="auto" loop muted autoplay
+                            playsinline style="display: block;">
+                            <source src="images/video.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <h3 class="pop-text text-rainbow-flow font-romantic">Happy Birthday! ❤️</h3>
+                    <button id="btn-feeding-next" class="btn btn-primary margin-top-md">Receive Your Gift 🎁</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. FLOWER BOUQUET -->
+        <section id="scene-bouquet" class="scene">
+            <div class="card glassmorphism text-center">
+                <h2>For You 💐</h2>
+
+                <div class="bouquet-container">
+                    <div class="bouquet-art">
+                        <img src="images/boquet.png" alt="Flower Bouquet for you" class="bouquet-img">
+                    </div>
+                </div>
+
+                <div class="message-box margin-top-md">
+                    <p class="romantic-text">"If I could, I'd hand these to you in person right now."</p>
+                </div>
+
+                <button id="btn-bouquet-next" class="btn btn-primary margin-top-md">What's Next? ✈️</button>
+            </div>
+        </section>
+
+        <!-- 9. FUTURE BUCKET LIST -->
+        <section id="scene-bucket-list" class="scene">
+            <div class="bucket-list-container">
+                <h2 class="section-title">Our Future Bucket List ✈️</h2>
+
+                <!-- Flashcard Stack Deck Container -->
+                <div class="deck-wrapper">
+                    <div id="bucket-deck" class="bucket-deck">
+                        <!-- Card 1 -->
+                        <div class="bucket-card active-card" data-index="0">
+                            <div class="bucket-info">
+                                <h3>Travel together</h3>
+                                <p>Exploring new cities, scaling mountain trails, and getting lost in new adventures.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="bucket-card" data-index="1">
+                            <div class="bucket-info">
+                                <h3>Watch sunrise and sunset</h3>
+                                <p>Holding hands while the sky paints itself in gorgeous shades of gold and purple.</p>
+                            </div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="bucket-card" data-index="2">
+                            <div class="bucket-info">
+                                <h3>Complete half marathon</h3>
+                                <p>Running side by side, pushing our limits, and crossing the finish line together by
+                                    the end of the year!</p>
+                            </div>
+                        </div>
+                        <!-- Card 4 -->
+                        <div class="bucket-card" data-index="3">
+                            <div class="bucket-info">
+                                <h3>Grow old together</h3>
+                                <p>Sharing morning coffees, gray hair, wrinkly smiles, and an everlasting warmth.</p>
+                            </div>
+                        </div>
+                        <!-- Card 5 -->
+                        <div class="bucket-card" data-index="4">
+                            <div class="bucket-info">
+                                <h3>Create more memories</h3>
+                                <p>Capturing laughter, silly arguments, sweet surprises, and adding chapters to our
+                                    beautiful book.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls for the Stack -->
+                    <div class="deck-controls">
+                        <span id="deck-progress">Card 1 of 5</span>
+                        <button id="btn-next-card" class="btn btn-primary btn-sm">Next Card →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. SECRET ENVELOPE & LETTER -->
+        <section id="scene-envelope" class="scene">
+            <!-- Envelope container -->
+            <div id="envelope-wrapper" class="envelope-wrapper">
+                <div class="envelope">
+                    <div class="flap top"></div>
+                    <div class="flap left"></div>
+                    <div class="flap right"></div>
+                    <div class="letter-preview">
+                        <span class="letter-heart">❤️</span>
+                    </div>
+                    <div class="pocket"></div>
+                </div>
+                <p class="click-instruction">Click the Envelope to open 💌</p>
+            </div>
+
+            <!-- Letter Content (appears after opening envelope) -->
+            <div id="letter-content" class="card letter-card glassmorphism hidden">
+                <div class="letter-body">
+                    <p class="letter-line line-1">Out of all the people in the world...</p>
+                    <p class="letter-line line-2">I am grateful that life brought me to you.</p>
+                    <p class="letter-line line-3">Thank you for being my happiness, my peace, and my favorite person.
+                    </p>
+                    <p class="letter-line line-4">Happy Birthday, my love.</p>
+                    <p class="letter-line line-5 signature">I love you endlessly ❤️</p>
+                </div>
+                <button id="btn-envelope-next" class="btn btn-danger margin-top-lg pulse-btn hidden">Click for Cute
+                    Memories 💖</button>
+            </div>
+        </section>
+
+        <!-- 11. CUTE MEMORIES GALLERY -->
+        <section id="scene-gallery" class="scene">
+            <div class="gallery-wrapper text-center">
+                <h2 class="section-title text-rainbow-flow">Our Cute Memories 📸</h2>
+
+                <div class="polaroid-container">
+                    <div class="polaroid-frame">
+                        <div class="polaroid-img-wrapper">
+                            <img id="gallery-photo" src="images/3 (1).jpg" alt="Memory Photo">
+                        </div>
+                        <div class="polaroid-caption" id="gallery-caption">Your silly smile that melts my heart❤️</div>
+                    </div>
+                </div>
+
+                <div class="gallery-controls">
+                    <button id="btn-gallery-prev" class="btn btn-secondary btn-sm">← Back</button>
+                    <span id="gallery-progress">Photo 1 of 7</span>
+                    <button id="btn-gallery-next" class="btn btn-primary btn-sm">Next →</button>
+                </div>
+            </div>
+        </section>
+
+        </section>
+    </main>
+
+    <script src="script.js?v=8"></script>
+</body>
+
+</html>
