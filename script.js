@@ -3,7 +3,7 @@
    ========================================== */
 // You can set a custom MP3 URL here if you'd like to use a specific song!
 // If empty, the website will use a beautiful built-in synthesizer.
-const CUSTOM_MP3_URL = "";
+const CUSTOM_MP3_URL = "images/Eed-sheeran-perfect-instrumentalfx.mp3";
 
 // Global state variables
 let currentScene = "scene-loading";
